@@ -1,0 +1,35 @@
+<idea-plugin>
+
+	<id>org.company.textblocktostring</id>
+
+	<name>Java TextBlock to String literal</name>
+
+	<depends>com.intellij.modules.java</depends>
+	<depends>com.intellij.modules.platform</depends>
+
+	<description>
+		<![CDATA[
+      Intention action that suggests converting a text block to string literal.
+    ]]>
+	</description>
+	<change-notes>
+		<![CDATA[
+      <ul>
+      	<li><b>1.0.3</b> Added icon.</li>
+        <li><b>1.0.2</b> Fix indentation</li>
+        <li><b>1.0.1</b> Fix: incorrect indentation when text block line starts with space.</li>
+        <li><b>1.0.0</b> Initial release.</li>
+      </ul>
+    ]]>
+	</change-notes>
+
+	<vendor url="https://github.com/MalachowskiTomasz">Malachowski Tomasz</vendor>
+
+	<extensions defaultExtensionNs="com.intellij">
+		<intentionAction>
+			<className>org.company.textblocktostring.TextblockConverter</className>
+			<category>SDK intentions</category>
+		</intentionAction>
+	</extensions>
+
+</idea-plugin>
