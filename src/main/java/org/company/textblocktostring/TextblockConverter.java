@@ -9,14 +9,16 @@ import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.impl.PsiElementBase;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @NonNls
 public class TextblockConverter extends PsiElementBaseIntentionAction implements IntentionAction {
@@ -80,10 +82,12 @@ public class TextblockConverter extends PsiElementBaseIntentionAction implements
 
 	@NotNull
 	private String removeTabsOnBeginningOfLine(String formattedText) {
-		String[] linesArray = formattedText.split(NEW_LINE);
+		List<String> unformattedLines = new ArrayList<>(Arrays.asList(formattedText.split(NEW_LINE)));
 		AtomicInteger minimumCountOfTabs = new AtomicInteger();
 
-		List<String> lines = Stream.of(linesArray)
+		deleteWhitespacesAtBegin(unformattedLines);
+
+		List<String> lines = unformattedLines.stream()
 				.peek(line -> calculateNumberOfTabsAtStartLine(minimumCountOfTabs, line))
 				.map(line -> removeTabsAtTheStart(line, minimumCountOfTabs.get()))
 				.map(this::removeEndLine)
@@ -93,6 +97,12 @@ public class TextblockConverter extends PsiElementBaseIntentionAction implements
 		removeWhitespacesAtTheEnd(lines);
 
 		return String.join("+\n", lines);
+	}
+
+	private void deleteWhitespacesAtBegin(List<String> lines) {
+		while(StringUtils.isBlank(lines.get(0))) {
+			lines.remove(0);
+		}
 	}
 
 	private String surroundLineWithQuotes(String line) {

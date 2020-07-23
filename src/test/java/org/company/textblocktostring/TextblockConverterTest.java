@@ -6,7 +6,7 @@ import org.junit.Assert;
 
 import static org.company.textblocktostring.TextblockConverter.INTENTION_VISIBLE_TEXT;
 
-public class TextblockConverterText extends LightJavaCodeInsightFixtureTestCase {
+public class TextblockConverterTest extends LightJavaCodeInsightFixtureTestCase {
 	@Override
 	protected String getTestDataPath() {
 		return "src/test/testData";
