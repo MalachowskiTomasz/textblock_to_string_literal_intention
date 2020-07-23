@@ -9,7 +9,6 @@ import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.impl.PsiElementBase;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,11 +26,12 @@ public class TextblockConverter extends PsiElementBaseIntentionAction implements
 	public static final String NEW_LINE = "\n";
 	public static final char SPACE = ' ';
 	public static final char TAB = '\t';
+	public static final String INTENTION_VISIBLE_TEXT = "Convert text block to string literal";
 
 	@Override
 	@NotNull
 	public String getText() {
-		return "Convert text block to string literal";
+		return INTENTION_VISIBLE_TEXT;
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class TextblockConverter extends PsiElementBaseIntentionAction implements
 	}
 
 	private String removeEndLine(String line) {
-		return line.replaceAll("[\n ]*]+$", "");
+		return line.replaceAll("[\n ]*]+$", EMPTY);
 	}
 
 	private String removeTabsAtTheStart(String line, int minimumCountOfTabs) {
@@ -138,7 +138,7 @@ public class TextblockConverter extends PsiElementBaseIntentionAction implements
 
 	@NotNull
 	private String removeFirstEndLine(String formattedText) {
-		return formattedText.replaceFirst(NEW_LINE + "*", "");
+		return formattedText.replaceFirst(NEW_LINE + "*", EMPTY);
 	}
 
 	@NotNull
