@@ -100,7 +100,7 @@ public class TextblockConverter extends PsiElementBaseIntentionAction implements
 	}
 
 	private String removeEndLine(String line) {
-		return StringUtils.removeEnd(line, NEW_LINE);
+		return line.replaceAll("[\n ]*]+$", "");
 	}
 
 	private String removeTabsAtTheStart(String line, int minimumCountOfTabs) {
@@ -121,7 +121,7 @@ public class TextblockConverter extends PsiElementBaseIntentionAction implements
 	}
 
 	private void removeWhitespacesAtTheEnd(List<String> lines) {
-		if (lines.get(lines.size() - 1).matches("\"[\\s\\\\n]*\"")) {
+		while (lines.get(lines.size() - 1).matches("\"[\\s\\\\n]*\"")) {
 			lines.remove(lines.size() - 1);
 		}
 		lines.set(lines.size() - 1, lines.get(lines.size() - 1).replace("\\n\"", "\""));
@@ -138,10 +138,7 @@ public class TextblockConverter extends PsiElementBaseIntentionAction implements
 
 	@NotNull
 	private String removeFirstEndLine(String formattedText) {
-		if (formattedText.startsWith(NEW_LINE)) {
-			formattedText = StringUtils.removeStart(formattedText, NEW_LINE);
-		}
-		return formattedText;
+		return formattedText.replaceFirst(NEW_LINE + "*", "");
 	}
 
 	@NotNull
