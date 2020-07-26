@@ -20,14 +20,11 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-@NonNls
-public class TextblockConverter extends PsiElementBaseIntentionAction implements IntentionAction {
+import static org.company.textblocktostring.CommonLiterals.*;
 
-	public static final String THREE_QUOTES = "\"\"\"";
-	public static final String EMPTY = "";
-	public static final String NEW_LINE = "\n";
-	public static final char SPACE = ' ';
-	public static final char TAB = '\t';
+@NonNls
+public class TextBlockToStringConverter extends PsiElementBaseIntentionAction implements IntentionAction {
+
 	public static final String INTENTION_VISIBLE_TEXT = "Convert text block to string literal";
 
 	@Override
@@ -44,9 +41,7 @@ public class TextblockConverter extends PsiElementBaseIntentionAction implements
 
 	@Override
 	public boolean isAvailable(@NotNull Project project, Editor editor, @Nullable PsiElement element) {
-		if (element == null) {
-			return false;
-		}
+		if (element == null) return false;
 
 		if (element instanceof PsiJavaToken) {
 			PsiJavaToken token = (PsiJavaToken) element;
@@ -59,9 +54,7 @@ public class TextblockConverter extends PsiElementBaseIntentionAction implements
 	public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
 
 		@Nullable PsiElementBase expression = PsiTreeUtil.getParentOfType(element, PsiElementBase.class, false);
-		if (isNullOrEmpty(expression)) {
-			return;
-		}
+		if (isNullOrEmpty(expression)) return;
 
 		String formattedText = removeAllTextBlocks(element);
 		formattedText = removeFirstEndLine(formattedText);
@@ -100,9 +93,7 @@ public class TextblockConverter extends PsiElementBaseIntentionAction implements
 	}
 
 	private void deleteWhitespacesAtBegin(List<String> lines) {
-		while(StringUtils.isBlank(lines.get(0))) {
-			lines.remove(0);
-		}
+		while (StringUtils.isBlank(lines.get(0))) lines.remove(0);
 	}
 
 	private String surroundLineWithQuotes(String line) {
@@ -120,9 +111,7 @@ public class TextblockConverter extends PsiElementBaseIntentionAction implements
 	private void calculateNumberOfTabsAtStartLine(AtomicInteger minimumCountOfTabs, String expression) {
 		if (minimumCountOfTabs.get() <= 0) {
 			int currentCharIndex = 0;
-			while (expression.charAt(currentCharIndex) == SPACE) {
-				currentCharIndex++;
-			}
+			while (expression.charAt(currentCharIndex) == SPACE) currentCharIndex++;
 			while (expression.charAt(currentCharIndex) == TAB) {
 				minimumCountOfTabs.incrementAndGet();
 				currentCharIndex++;
@@ -131,10 +120,8 @@ public class TextblockConverter extends PsiElementBaseIntentionAction implements
 	}
 
 	private void removeWhitespacesAtTheEnd(List<String> lines) {
-		while (lines.get(lines.size() - 1).matches("\"[\\s\\\\n]*\"")) {
-			lines.remove(lines.size() - 1);
-		}
-		lines.set(lines.size() - 1, lines.get(lines.size() - 1).replace("\\n\"", "\""));
+		while (lines.get(lines.size() - 1).matches("\"[\\s\\\\n]*\"")) lines.remove(lines.size() - 1);
+		lines.set(lines.size() - 1, lines.get(lines.size() - 1).replace("\\n\"", QUOTE));
 	}
 
 	private boolean isNullOrEmpty(@Nullable PsiElementBase conditionalExpression) {
@@ -143,7 +130,7 @@ public class TextblockConverter extends PsiElementBaseIntentionAction implements
 
 	@NotNull
 	private String escapeQuotes(String formattedText) {
-		return formattedText.replaceAll("\"", "\\\\\"");
+		return formattedText.replaceAll(QUOTE, ESCAPED_QUOTE);
 	}
 
 	@NotNull

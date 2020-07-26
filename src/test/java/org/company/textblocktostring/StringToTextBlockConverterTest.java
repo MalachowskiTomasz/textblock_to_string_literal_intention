@@ -1,15 +1,15 @@
 package org.company.textblocktostring;
 
 import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import org.junit.Assert;
 
-import static org.company.textblocktostring.TextblockConverter.INTENTION_VISIBLE_TEXT;
+import static org.company.textblocktostring.StringToTextBlockConverter.INTENTION_VISIBLE_TEXT;
 
-public class TextblockConverterTest extends LightJavaCodeInsightFixtureTestCase {
+public class StringToTextBlockConverterTest extends BasePlatformTestCase {
 	@Override
 	protected String getTestDataPath() {
-		return "src/test/testData";
+		return "src/test/stringToTextBlockTestData";
 	}
 
 	protected void doTest(String testName) {
@@ -22,6 +22,10 @@ public class TextblockConverterTest extends LightJavaCodeInsightFixtureTestCase 
 
 	public void testIntention_onHtml() {
 		doTest("html");
+	}
+
+	public void testIntention_onSingleLine() {
+		doTest("singleline");
 	}
 
 	public void testIntention_onJson() {

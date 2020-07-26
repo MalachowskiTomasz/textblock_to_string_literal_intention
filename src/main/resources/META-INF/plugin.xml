@@ -9,12 +9,13 @@
 
 	<description>
 		<![CDATA[
-      Intention action that suggests converting a text block to string literal.
+      Intentions enabling conversion of a text block from/to string literal.
     ]]>
 	</description>
 	<change-notes>
 		<![CDATA[
       <ul>
+      	<li><b>1.0.7</b> Add conversion from string literal to text block </li>
       	<li><b>1.0.6 - 1.0.4</b> Fix bugs</li>
       	<li><b>1.0.3</b> Added icon.</li>
         <li><b>1.0.2</b> Fix indentation</li>
@@ -28,7 +29,11 @@
 
 	<extensions defaultExtensionNs="com.intellij">
 		<intentionAction>
-			<className>org.company.textblocktostring.TextblockConverter</className>
+			<className>org.company.textblocktostring.TextBlockToStringConverter</className>
+			<category>SDK intentions</category>
+		</intentionAction>
+		<intentionAction>
+			<className>org.company.textblocktostring.StringToTextBlockConverter</className>
 			<category>SDK intentions</category>
 		</intentionAction>
 	</extensions>
