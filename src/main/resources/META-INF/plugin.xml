@@ -15,6 +15,7 @@
 	<change-notes>
 		<![CDATA[
       <ul>
+      	<li><b>1.0.8</b> Enable conversion when there are variables in string</li>
       	<li><b>1.0.7</b> Add conversion from string literal to text block </li>
       	<li><b>1.0.6 - 1.0.4</b> Fix bugs</li>
       	<li><b>1.0.3</b> Added icon.</li>

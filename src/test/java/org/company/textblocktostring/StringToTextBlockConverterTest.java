@@ -32,4 +32,12 @@ public class StringToTextBlockConverterTest extends BasePlatformTestCase {
 		doTest("json");
 	}
 
+	public void testIntention_withVariable() {
+		doTest("withVariable");
+	}
+
+	public void testIntention_onSingleLineWithVariable() {
+		doTest("singleLineWithVariable");
+	}
+
 }

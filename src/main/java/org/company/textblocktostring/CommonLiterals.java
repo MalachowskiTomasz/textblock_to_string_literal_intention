@@ -12,4 +12,5 @@ public class CommonLiterals {
     public static final char SPACE = ' ';
     public static final char TAB = '\t';
     public static final String QUOTE = "\"";
+    public static final String COMMA = ",";
 }
